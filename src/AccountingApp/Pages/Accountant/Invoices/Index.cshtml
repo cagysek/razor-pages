@@ -1,0 +1,67 @@
+@page
+@model AccountingApp.Pages.Accountant.Invoices.IndexModel
+@using Microsoft.AspNetCore.Http;
+@using AccountingApp.Enum;
+@using AccountingApp.Services;
+
+@{
+    ViewData["Title"] = "Faktury";
+    Layout = "_Layout";
+}
+<h2>Seznam faktur</h2>
+
+@if (@HttpContext.Session.GetString(SessionService.ROLE) != null && @HttpContext.Session.GetString(SessionService.ROLE).Equals(ERole.Accountant))
+{
+    <a asp-page="Create"><button type="button" class="btn btn-success">Nový <i class="fas fa-plus"></i></button></a>
+}
+
+<div class="table-wrapper">
+    <table class="table" xmlns:th="http://www.w3.org/1999/xhtml">
+        <thead>
+            <tr>
+                <th scope="col">@Html.DisplayNameFor(model => model.InvoiceList[0].ID)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.InvoiceList[0].Suppliercompany.Title)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.InvoiceList[0].BillToCompany.Title)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.InvoiceList[0].PublishDate)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.InvoiceList[0].PaymentDate)</th>
+                <th scope="col">Stav</th>    
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.InvoiceList)
+            {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.ID)</td>
+                <td>@Html.DisplayFor(modelItem => item.Suppliercompany.Title)</td>
+                <td>@Html.DisplayFor(modelItem => item.BillToCompany.Title)</td>
+                <td>@Html.DisplayFor(modelItem => item.PublishDate)</td>
+                <td>@Html.DisplayFor(modelItem => item.PaymentDate)</td>
+                <td>
+                    @if (item.IsStorno)
+                    {
+                        <span>Storno</span>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.Type)
+                    }
+                </td>
+                <td>
+                    <a asp-page="./Details" asp-route-id="@item.ID"><i class="fas fa-info-circle"></i></a>
+                    @if (@HttpContext.Session.GetString(SessionService.ROLE) != null && @HttpContext.Session.GetString(SessionService.ROLE).Equals(ERole.Accountant))
+                    {
+                        @if (!item.IsStorno)
+                        {
+                            <a asp-page="./Edit" asp-route-id="@item.ID"><i class="far fa-edit"></i></a>
+                        }
+
+                        <a asp-page="./Delete" asp-route-id="@item.ID" onclick="return confirm('Opravdu chcete odstranit fakturu?')"><i class="far fa-trash-alt"></i></a>
+                    }
+                </td>
+            </tr>
+
+            }
+        </tbody>
+    </table>
+</div>

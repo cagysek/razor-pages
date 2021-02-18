@@ -1,0 +1,82 @@
+@page
+@model AccountingApp.Pages.Accountant.Companies.EditModel
+
+@{
+    ViewData["Title"] = "Editace společností";
+    Layout = "_Layout";
+}
+<h2>Editace společnosti @Model.Company.Title</h2>
+
+<a asp-page="Index"><button type="button" class="btn btn-primary">Zpět</button></a>
+
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Company.ID" />
+    <input type="hidden" asp-for="Company.Address.ID" />
+    <table class="table">
+        <thead>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row"><label asp-for="Company.Title" class="control-label"></label></th>
+                <td>
+                    <input asp-for="Company.Title" class="form-control" />
+                    <span asp-validation-for="Company.Title"></span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row"><label asp-for="Company.Ic" class="control-label"></label></th>
+                <td>
+                    <input asp-for="Company.Ic" class="form-control" />
+                    <span asp-validation-for="Company.Ic"></span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row"><label asp-for="Company.Dic" class="control-label"></label></th>
+                <td>
+                    <input asp-for="Company.Dic" class="form-control" />
+                    <span asp-validation-for="Company.Dic"></span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row"><label asp-for="Company.Phone" class="control-label"></label></th>
+                <td>
+                    <input asp-for="Company.Phone" class="form-control" />
+                    <span asp-validation-for="Company.Phone"></span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row"><label asp-for="Company.Email" class="control-label"></label></th>
+                <td>
+                    <input asp-for="Company.Email" class="form-control" />
+                    <span asp-validation-for="Company.Email"></span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row"><label asp-for="Company.AccountNumber" class="control-label"></label></th>
+                <td>
+                    <input asp-for="Company.AccountNumber" class="form-control" />
+                    <span asp-validation-for="Company.AccountNumber"></span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Adresa</th>
+                <td>
+                    <input asp-for="Company.Address.Street" class="form-control" placeholder="Ulice" />
+                    <span asp-validation-for="Company.Address.Street"></span>
+
+                    <input asp-for="Company.Address.City" class="form-control" placeholder="Město" />
+                    <span asp-validation-for="Company.Address.City"></span>
+
+                    <input asp-for="Company.Address.ZipCode" class="form-control" placeholder="PSČ" />
+                    <span asp-validation-for="Company.Address.ZipCode"></span>
+                </td>
+            </tr>
+            <tr>
+                <th><input type="submit" value="Upravit" class="btn btn-primary" /></th>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</form>

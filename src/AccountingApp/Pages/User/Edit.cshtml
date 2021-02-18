@@ -1,0 +1,75 @@
+@page
+@model AccountingApp.Pages.User.EditModel
+
+@{
+    ViewData["Title"] = "Editace uživatele";
+    Layout = "_Layout";
+}
+
+
+<h2>Editace uživatele @Model.UserEdit.UserName</h2>
+
+<a asp-page="./Details"><button type="button" class="btn btn-primary">Zpět</button></a>
+
+<hr />
+
+<form method="post">
+    <input type="hidden" asp-for="UserEdit.Id" />
+    <input type="hidden" asp-for="UserEdit.Address.ID" />
+
+    <table class="table">
+        <tbody>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <tr>
+                <th scope="row " class="required"><label asp-for="UserEdit.FirstName" class="control-label"></label></th>
+                <td><input asp-for="UserEdit.FirstName" class="form-control" /></td>
+            </tr>
+            <tr>
+                <th scope="row " class="required"><label asp-for="UserEdit.LastName" class="control-label"></label></th>
+                <td><input asp-for="UserEdit.LastName" class="form-control" /></td>
+            </tr>
+            <tr>
+                <th scope="row " class="required"><label asp-for="UserEdit.PersonalIdentificationNumber" class="control-label"></label></th>
+                <td><input asp-for="UserEdit.PersonalIdentificationNumber" class="form-control" /></td>
+            </tr>
+            <tr>
+                <th scope="row " class="required"><label asp-for="UserEdit.Email" class="control-label"></label></th>
+                <td><input asp-for="UserEdit.Email" class="form-control" /></td>
+            </tr>
+            <tr>
+                <th scope="row " class="required"><label asp-for="UserEdit.Phone" class="control-label"></label></th>
+                <td><input asp-for="UserEdit.Phone" class="form-control" /></td>
+            </tr>
+            <tr>
+                <th scope="row " class="required"><label asp-for="UserEdit.AccountNumber" class="control-label"></label></th>
+                <td><input asp-for="UserEdit.AccountNumber" class="form-control" /></td>
+            </tr>
+            <tr>
+                <th scope="row " class="required"><label asp-for="UserEdit.CardNumber" class="control-label"></label></th>
+                <td><input asp-for="UserEdit.CardNumber" class="form-control" /></td>
+            </tr>
+            <tr>
+                <th scope="row " class="required"><label asp-for="UserEdit.UserName" class="control-label"></label></th>
+                <td><input asp-for="UserEdit.UserName" class="form-control" /></td>
+            </tr>
+            <tr>
+                <th scope="row">Adresa</th>
+                <td>
+                    <input asp-for="UserEdit.Address.Street" class="form-control" placeholder="Ulice" />
+                    <input asp-for="UserEdit.Address.City" class="form-control" placeholder="Město" />
+                    <input asp-for="UserEdit.Address.ZipCode" class="form-control" placeholder="PSČ" />
+                </td>
+            </tr>
+            <tr>
+                <th><input type="submit" value="Uložit" class="btn btn-primary" /></th>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

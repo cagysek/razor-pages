@@ -1,0 +1,53 @@
+@page
+@model AccountingApp.Pages.Accountant.Companies.DetailsModel
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Detail společnosti";
+}
+
+<h2>Detail společnosti @Model.Company.Title</h2>
+
+<a asp-page="./Index"><button type="button" class="btn btn-primary">Zpět</button></a>
+<a asp-page="./Edit" asp-route-id="@Model.Company.ID"><button type="button" class="btn btn-primary">Editace</button></a>
+
+<div class="table-wrapper">
+    <table class="table">
+        <thead>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Název</th>
+                <td>@Html.DisplayFor(model => model.Company.Title)</td>
+            </tr>
+            <tr>
+                <th scope="row">IČ</th>
+                <td>@Html.DisplayFor(model => model.Company.Ic)</td>
+            </tr>
+            <tr>
+                <th scope="row">DIČ</th>
+                <td>@Html.DisplayFor(model => model.Company.Dic)</td>
+            </tr>
+            <tr>
+                <th scope="row">Telefonní číslo</th>
+                <td>@Html.DisplayFor(model => model.Company.Phone)</td>
+            </tr>
+            <tr>
+                <th scope="row">Email</th>
+                <td>@Html.DisplayFor(model => model.Company.Email)</td>
+            </tr>
+            <tr>
+                <th scope="row">Číslo účtu</th>
+                <td>@Html.DisplayFor(model => model.Company.AccountNumber)</td>
+            </tr>
+            <tr>
+                <th scope="row">Adresa</th>
+                <td>
+                    @Html.DisplayFor(model => model.Company.Address.Street)<br />
+                    @Html.DisplayFor(model => model.Company.Address.City)<br />
+                    @Html.DisplayFor(model => model.Company.Address.ZipCode)<br />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,160 @@
+@page
+@model AccountingApp.Pages.Accountant.Invoices.DetailsModel
+@using Microsoft.AspNetCore.Http;
+@using AccountingApp.Enum;
+@using AccountingApp.Services;
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_Layout";
+}
+
+<h2>
+    Detail faktury č. @Html.DisplayFor(model => model.Invoice.ID)
+
+    @if (Model.Invoice.IsStorno)
+    {
+        <span>Stornováno</span>
+    }
+    else
+    {
+        <span>@Html.DisplayFor(model => model.Invoice.Type)</span>
+    }
+
+</h2>
+
+<a asp-page="./Index"><button type="button" class="btn btn-primary">Zpět</button></a>
+
+@if (@HttpContext.Session.GetString(SessionService.ROLE) != null && @HttpContext.Session.GetString(SessionService.ROLE).Equals(ERole.Accountant) && !Model.Invoice.IsStorno)
+{
+    <a asp-page="./Edit" asp-route-id="@Model.Invoice.ID"><button type="button" class="btn btn-primary">Editace</button></a>
+}
+
+
+<div class="row">
+    <div class="split-row">
+        <h3>Dodavatel</h3>
+        <table class="table">
+            <thead>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Název:</th>
+                    <td>@Html.DisplayFor(model => model.Invoice.Suppliercompany.Title)</td>
+                </tr>
+                <tr>
+                    <th scope="row">Adresa:</th>
+                    <td>
+                        @Html.DisplayFor(model => model.Invoice.Suppliercompany.Address.Street)<br>
+                        @Html.DisplayFor(model => model.Invoice.Suppliercompany.Address.City)<br>
+                        @Html.DisplayFor(model => model.Invoice.Suppliercompany.Address.ZipCode)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">IČ:</th>
+                    <td>@Html.DisplayFor(model => model.Invoice.Suppliercompany.Ic)</td>
+                </tr>
+                <tr>
+                    <th scope="row">DIČ:</th>
+                    <td>@Html.DisplayFor(model => model.Invoice.Suppliercompany.Dic)</td>
+                </tr>
+                <tr>
+                    <th scope="row">Číslo účtu:</th>
+                    <td>@Html.DisplayFor(model => model.Invoice.Suppliercompany.AccountNumber)</td>
+                </tr>
+                <tr>
+                    <th scope="row">Variabilní symbol:</th>
+                    <td>@Html.FormatValue(Model.Invoice.ID, "{0:000000}")</td>
+                </tr>
+                <tr>
+                    <th scope="row">Způsob platby:</th>
+                    <td>Převodem</td>
+                </tr>
+
+
+            </tbody>
+        </table>
+    </div>
+    <div class="split-row">
+        <h3>Odběratel</h3>
+        <table class="table">
+            <thead>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Název:</th>
+                    <td>@Html.DisplayFor(model => model.Invoice.BillToCompany.Title)</td>
+                </tr>
+                <tr>
+                    <th scope="row">Adresa:</th>
+                    <td>
+                        @Html.DisplayFor(model => model.Invoice.BillToCompany.Address.Street)<br>
+                        @Html.DisplayFor(model => model.Invoice.BillToCompany.Address.City)<br>
+                        @Html.DisplayFor(model => model.Invoice.BillToCompany.Address.ZipCode)
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">IČ:</th>
+                    <td>@Html.DisplayFor(model => model.Invoice.BillToCompany.Ic)</td>
+                </tr>
+                <tr>
+                    <th scope="row">DIČ:</th>
+                    <td>@Html.DisplayFor(model => model.Invoice.BillToCompany.Dic)</td>
+                </tr>
+                <tr>
+                    <th scope="row">Datum vystavění: </th>
+                    <td>@Html.DisplayFor(model => model.Invoice.PublishDate)</td>
+                </tr>
+                <tr>
+                    <th scope="row">Datum splatnosti: </th>
+                    <td>@Html.DisplayFor(model => model.Invoice.PaymentDate)</td>
+                </tr>
+                <tr>
+                    <th scope="row">Datum zdan. plnění: </th>
+                    <td>@Html.DisplayFor(model => model.Invoice.TaxableSupplyDate)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<div class="row">
+    <h3>Seznam položek</h3>
+    <div class="table-wrapper">
+        <table class="table" xmlns:th="http://www.w3.org/1999/xhtml">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Název</th>
+                    <th scope="col">Počet</th>
+                    <th scope="col">DPH</th>
+                    <th scope="col">Cena/ks</th>
+                    <th scope="col">Cena/ks s DPH</th>
+                    <th scope="col">Celkem s DPH</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Invoice.InvoiceItems)
+                {
+                    var sum = item.PriceDph * item.Quantity;
+                    <tr>
+                        <td>@Html.DisplayFor(model => item.ID)</td>
+                        <td>@Html.DisplayFor(model => item.Name)</td>
+                        <td>@Html.DisplayFor(model => item.Quantity)&nbsp;Ks</td>
+                        <td>@Html.DisplayFor(model => item.PriceVat)&nbsp;%</td>
+                        <td>@Html.DisplayFor(model => item.Price)&nbsp;Kč</td>
+                        <td>@Html.DisplayFor(model => item.PriceDph)&nbsp;Kč</td>
+                        <td>@Html.DisplayFor(model => item.TotalPriceDph)&nbsp;Kč</td>
+                    </tr>
+                }
+               
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="price-box">
+        Celková cena:&nbsp<strong>@Html.DisplayFor(model => model.Invoice.TotalPrice)&nbsp;Kč</strong><br>
+        Celková cena včetně DPH:&nbsp<strong>@Html.DisplayFor(model => model.Invoice.TotalPriceDph)&nbsp;Kč</strong>
+    </div>
+
+</div>

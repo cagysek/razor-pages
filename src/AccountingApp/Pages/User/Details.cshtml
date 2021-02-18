@@ -1,0 +1,14 @@
+@page
+@model AccountingApp.Pages.User.DetailsModel
+
+@{
+    ViewData["Title"] = "Detail uživatele";
+    Layout = "_Layout";
+}
+
+<h2>Detail uživatele @Html.DisplayFor(model => model.AppUser.UserName)</h2>
+
+<a asp-page="./Edit"><button type="button" class="btn btn-primary">Editace</button></a>
+<a asp-page="/PasswordChange"><button type="button" class="btn btn-primary">Změna hesla</button></a>
+
+@await Html.PartialAsync("_UserDetail", Model.AppUser)

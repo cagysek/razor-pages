@@ -1,0 +1,111 @@
+@page
+@model AccountingApp.Pages.Users.CreateModel
+
+@{
+    ViewData["Title"] = "Vytvoření uživatele";
+    Layout = "_Layout";
+}
+
+<h2>Vytvoření nového uživatele</h2>
+
+<a asp-page="Index"><button type="button" class="btn btn-primary">Zpět</button></a>
+
+<hr />
+
+<form method="post">
+    <table class="table">
+        <thead>
+        </thead>
+        <tbody>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <tr>
+                <th scope="row " class="required"><label asp-for="AppUser.FirstName" class="control-label"></label></th>
+                <td>
+                    <input asp-for="AppUser.FirstName" class="form-control" />
+                    <span asp-validation-for="AppUser.FirstName"></span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row " class="required"><label asp-for="AppUser.LastName" class="control-label"></label></th>
+                <td>
+                    <input asp-for="AppUser.LastName" class="form-control" />
+                    <span asp-validation-for="AppUser.LastName"></span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row " class="required"><label asp-for="AppUser.PersonalIdentificationNumber" class="control-label"></label></th>
+                <td>
+                    <input asp-for="AppUser.PersonalIdentificationNumber" class="form-control" />
+                    <span asp-validation-for="AppUser.PersonalIdentificationNumber"></span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row " class="required"><label asp-for="AppUser.Email" class="control-label"></label></th>
+                <td>
+                    <input asp-for="AppUser.Email" class="form-control" />
+                    <span asp-validation-for="AppUser.Email"></span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row " class="required"><label asp-for="AppUser.Phone" class="control-label"></label></th>
+                <td>
+                    <input asp-for="AppUser.Phone" class="form-control" />
+                    <span asp-validation-for="AppUser.Phone"></span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row " class="required"><label asp-for="AppUser.AccountNumber" class="control-label"></label></th>
+                <td>
+                    <input asp-for="AppUser.AccountNumber" class="form-control" />
+                    <span asp-validation-for="AppUser.AccountNumber"></span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row " class="required"><label asp-for="AppUser.CardNumber" class="control-label"></label></th>
+                <td>
+                    <input asp-for="AppUser.CardNumber" class="form-control" />
+                    <span asp-validation-for="AppUser.CardNumber"></span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row " class="required"><label asp-for="AppUser.UserName" class="control-label"></label></th>
+                <td>
+                    <input asp-for="AppUser.UserName" class="form-control" />
+                    <span asp-validation-for="AppUser.UserName"></span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Adresa</th>
+                <td>
+                    <input asp-for="AppUser.Address.Street" class="form-control" placeholder="Ulice" />
+                    <span asp-validation-for="AppUser.Address.Street"></span>
+
+                    <input asp-for="AppUser.Address.City" class="form-control" placeholder="Město" />
+                    <span asp-validation-for="AppUser.Address.City"></span>
+
+                    <input asp-for="AppUser.Address.ZipCode" class="form-control" placeholder="PSČ" />
+                    <span asp-validation-for="AppUser.Address.ZipCode"></span>
+                </td>
+            </tr>
+
+        <th scope="row"><label for="role">Role</label></th>
+        <td>
+            <select asp-for="SelectedRole" class="form-control" asp-items="Model.Roles"></select>
+        </td>
+
+
+        <tr>
+            <th scope="row " class="required"><label asp-for="AppUser.Password" class="control-label"></label></th>
+            <td>
+                <input asp-for="AppUser.Password" class="form-control" type="password"/>
+                <span asp-validation-for="AppUser.Password"></span>
+            </td>
+        </tr>
+        <tr>
+            <th><input type="submit" value="Uložit" class="btn btn-primary" /></th>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</form>

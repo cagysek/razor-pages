@@ -1,0 +1,40 @@
+@page
+@model AccountingApp.Pages.Accountant.Companies.IndexModel
+
+@{
+    ViewData["Title"] = "Přehled společností";
+    Layout = "_Layout";
+}
+
+<h2>Seznam společností</h2>
+
+<a asp-page="Create"><button type="button" class="btn btn-success">Nový <i class="fas fa-plus"></i></button></a>
+
+<div class="table-wrapper">
+    <table class="table" xmlns:th="http://www.w3.org/1999/xhtml">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Company[0].ID)</th>
+                <th>@Html.DisplayNameFor(model => model.Company[0].Title)</th>
+                <th>@Html.DisplayNameFor(model => model.Company[0].Ic)</th>
+                <th>@Html.DisplayNameFor(model => model.Company[0].Dic)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Company)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.ID)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Ic)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Dic)</td>
+                    <td>
+                        <a asp-page="./Details" asp-route-id="@item.ID"><i class="far fa-info-circle"></i></a>
+                        <a asp-page="./Edit" asp-route-id="@item.ID"><i class="far fa-edit"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

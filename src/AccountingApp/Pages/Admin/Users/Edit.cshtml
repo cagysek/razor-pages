@@ -1,0 +1,119 @@
+@page
+@model AccountingApp.Pages.Users.EditModel
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Editace uživatele";
+}
+
+<h2>Editace uživatele @Model.AdminUserEdit.UserName</h2>
+
+<a asp-page="Index"><button type="button" class="btn btn-primary">Zpět</button></a>
+
+<hr />
+
+<form method="post">
+    <input type="hidden" asp-for="AdminUserEdit.Id" />
+    <input type="hidden" asp-for="AdminUserEdit.Address.ID" />
+
+    <table class="table">
+        <thead>
+        </thead>
+        <tbody>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <tr>
+                <th scope="row " class="required"><label asp-for="AdminUserEdit.FirstName" class="control-label"></label></th>
+                <td>
+                    <input asp-for="AdminUserEdit.FirstName" class="form-control" />
+                    <span asp-validation-for="AdminUserEdit.FirstName"></span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row " class="required"><label asp-for="AdminUserEdit.LastName" class="control-label"></label></th>
+                <td>
+                    <input asp-for="AdminUserEdit.LastName" class="form-control" />
+                    <span asp-validation-for="AdminUserEdit.LastName"></span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row " class="required"><label asp-for="AdminUserEdit.PersonalIdentificationNumber" class="control-label"></label></th>
+                <td>
+                    <input asp-for="AdminUserEdit.PersonalIdentificationNumber" class="form-control" />
+                    <span asp-validation-for="AdminUserEdit.PersonalIdentificationNumber"></span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row " class="required"><label asp-for="AdminUserEdit.Email" class="control-label"></label></th>
+                <td>
+                    <input asp-for="AdminUserEdit.Email" class="form-control" />
+                    <span asp-validation-for="AdminUserEdit.Email"></span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row " class="required"><label asp-for="AdminUserEdit.Phone" class="control-label"></label></th>
+                <td>
+                    <input asp-for="AdminUserEdit.Phone" class="form-control" />
+                    <span asp-validation-for="AdminUserEdit.Phone"></span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row " class="required"><label asp-for="AdminUserEdit.AccountNumber" class="control-label"></label></th>
+                <td>
+                    <input asp-for="AdminUserEdit.AccountNumber" class="form-control" />
+                    <span asp-validation-for="AdminUserEdit.AccountNumber"></span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row " class="required"><label asp-for="AdminUserEdit.CardNumber" class="control-label"></label></th>
+                <td>
+                    <input asp-for="AdminUserEdit.CardNumber" class="form-control" />
+                    <span asp-validation-for="AdminUserEdit.CardNumber"></span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row " class="required"><label asp-for="AdminUserEdit.UserName" class="control-label"></label></th>
+                <td>
+                    <input asp-for="AdminUserEdit.UserName" class="form-control" />
+                    <span asp-validation-for="AdminUserEdit.UserName"></span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Adresa</th>
+                <td>
+                    <input asp-for="AdminUserEdit.Address.Street" class="form-control" placeholder="Ulice" />
+                    <span asp-validation-for="AdminUserEdit.Address.Street"></span>
+
+                    <input asp-for="AdminUserEdit.Address.City" class="form-control" placeholder="Město" />
+                    <span asp-validation-for="AdminUserEdit.Address.City"></span>
+
+                    <input asp-for="AdminUserEdit.Address.ZipCode" class="form-control" placeholder="PSČ" />
+                    <span asp-validation-for="AdminUserEdit.Address.ZipCode"></span>
+                </td>
+            </tr>
+                    
+            <th scope="row"><label for="role" class="required">Role</label></th>
+            <td>
+                <select asp-for="SelectedRole" class="form-control">
+                    @foreach (var role in Model.Roles)
+                    {
+                        <option value="@role.Value" selected="@role.Selected">@role.Text</option>
+                    }
+                </select>
+            </td>
+                
+            
+            <tr>
+                <th scope="row"><label asp-for="AdminUserEdit.NewPassword" class="control-label"></label></th>
+                <td>
+                    <input asp-for="AdminUserEdit.NewPassword" class="form-control" type="password"/>
+                    <span asp-validation-for="AdminUserEdit.NewPassword"></span>
+                </td>
+            </tr>
+            <tr>
+                <th><input type="submit" value="Uložit" class="btn btn-primary" /></th>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</form>

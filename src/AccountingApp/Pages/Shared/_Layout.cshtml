@@ -1,0 +1,110 @@
+﻿@using Microsoft.AspNetCore.Http;
+@using AccountingApp.Enum;
+@using AccountingApp.Services;
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - AccountingApp</title>
+
+    <link rel="stylesheet" href="~/css/style.css" />
+    <link rel="stylesheet" href="~/css/all.css" />
+    <link href="~/css/jquery-ui.css" rel="stylesheet">
+
+    <script src="~/js/jquery.js"></script>
+
+    @RenderSection("Head", false/*required*/)
+
+</head>
+<body>
+    <header>
+        <nav th:fragment="navigation" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="">
+            <div class="topnav" id="myTopnav">
+                <a asp-page="/Index">O aplikaci</a>
+                
+                <!--ADMIN-->
+                @if (@Context.Session.GetString(SessionService.ROLE) != null && @Context.Session.GetString(SessionService.ROLE).Equals(ERole.Admin))
+                {
+                    <a asp-page="/Admin/Users/Index" class="nav-link">Přehled uživatelů</a>
+                }
+
+                <!--Accountant-->
+                @if (@Context.Session.GetString(SessionService.ROLE) != null && @Context.Session.GetString(SessionService.ROLE).Equals(ERole.Accountant))
+                {
+                    <a asp-page="/Accountant/Companies/Index" class="nav-link">Seznam kontaktů</a>
+                }
+
+                <a class="nav-link" asp-page="/Accountant/Invoices/Index">Faktury</a>
+                <a href="javascript:void(0);" class="icon" onclick="openMenu()">&#9776;</a>
+                <span class="nav-right">
+                    @if (Context.Session.GetInt32(SessionService.LOGGED) != 1)
+                    {
+                        <!--anonym-->
+                        <div>
+                            <a asp-page="/Login" class="form-inline">
+                                <button class="btn loginButton">Přihlásit se</button>
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <!--přihlášený-->
+                        <div>
+                            <div class="dropdown">
+                                <a class="dropbtn">
+                                    Vítej @Context.Session.GetString(SessionService.USERNAME)<span class="angle-down-wrapper"><i class="fas fa-angle-down"></i></span>
+                                </a>
+                                <div class="dropdown-content">
+                                    <a asp-page="/User/Details">Přehled</a>
+                                    <a href="#" onclick="document.forms['logoutForm'].submit()">Odhlásit se</a>
+                                </div>
+                            </div>
+
+                            <form id="logoutForm" method="POST" asp-page="/Logout">
+                                <input type="hidden" />
+                            </form>
+                        </div>
+                    }
+
+                </span>
+            </div>
+        </nav>
+    </header>
+
+    @if (TempData["error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["error"]
+        </div>
+    }
+
+    @if (TempData["success"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["success"]
+        </div>
+    }
+  
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer id="footer" class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - AccountingApp
+        </div>
+    </footer>
+
+    
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

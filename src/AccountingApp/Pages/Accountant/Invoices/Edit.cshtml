@@ -1,0 +1,160 @@
+@page
+@model AccountingApp.Pages.Accountant.Invoices.EditModel
+
+@{
+    ViewData["Title"] = "Editace faktury";
+    Layout = "_Layout";
+}
+
+<h2>Vytvoření faktury</h2>
+
+<a asp-page="Index"><button type="button" class="btn btn-primary">Zpět</button></a>
+
+<form method="post">
+    <input type="hidden" asp-for="Invoice.ID" />
+    <table class="table">
+        <tbody>
+            <tr>
+                <th scope="row">
+                    <label asp-for="Invoice.Suppliercompany" class="control-label"></label>
+                </th>
+                <td>
+                    <select asp-for="SelectSupplierCompany" class="form-control">
+                        @{
+                            foreach (var company in Model.CompaniesList)
+                            {
+                                bool selected = company.Value == Model.Invoice.Suppliercompany.ID.ToString();
+
+                                <option value="@company.Value" selected="@selected">@company.Text</option>
+                            }
+                        }
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    <label asp-for="Invoice.BillToCompany" class="control-label"></label>
+                </th>
+                <td>
+                    <select asp-for="SelectBillCompany" class="form-control">
+                        @{
+                            foreach (var company in Model.CompaniesList)
+                            {
+                                bool selected = company.Value == Model.Invoice.BillToCompany.ID.ToString();
+
+                                <option value="@company.Value" selected="@selected">@company.Text</option>
+                            }
+                        }
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    <label asp-for="Invoice.PublishDate" class="control-label"></label>
+                </th>
+                <td>
+                    <input asp-for="Invoice.PublishDate" class="datepicker form-control" />
+                    <span asp-validation-for="Invoice.PublishDate"></span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    <label asp-for="Invoice.PaymentDate" class="control-label"></label>
+                </th>
+                <td>
+                    <input asp-for="Invoice.PaymentDate" class="datepicker form-control" />
+                    <span asp-validation-for="Invoice.PaymentDate"></span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row"><label asp-for="Invoice.TaxableSupplyDate" class="control-label"></label></th>
+                <td>
+                    <input asp-for="Invoice.TaxableSupplyDate" class="datepicker form-control" />
+                    <span asp-validation-for="Invoice.TaxableSupplyDate"></span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    <label asp-for="Invoice.Type" class="control-label"></label>
+                </th>
+                <td>
+                    <select asp-for="Invoice.Type" class="form-control" asp-items="Html.GetEnumSelectList<Models.InvoiceType>()"></select>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    <label asp-for="Invoice.IsStorno" class="control-label"></label>
+                </th>
+                <td>
+                    <input asp-for="Invoice.IsStorno" class="form-control"></input>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Položky faktury</h3>
+    <div id="invoiceItems">
+        <div class="row invoiceItemsHeader">
+
+            <div class="col form-group">Název</div>
+            <div class="col form-group">Počet (ks)</div>
+            <div class="col form-group">DPH (%)</div>
+            <div class="col form-group">Cena/ks (Kč)</div>
+            <div class="col form-group">Cena/ks s DPH (Kč)</div>
+        </div>
+        @{
+            int i = 0;
+            foreach (var item in Model.Invoice.InvoiceItems)
+            {
+                <div class="row item">
+                    <div class="col form-group">
+                        <input asp-for="Invoice.InvoiceItems[i].Name" type="text" class="form-control">
+                    </div>
+                    <div class="col form-group">
+                        <input asp-for="Invoice.InvoiceItems[i].Quantity" type="text" class="form-control">
+                    </div>
+                    <div class="col form-group">
+                        <input asp-for="Invoice.InvoiceItems[i].PriceVat" type="text" class="form-control">
+                    </div>
+                    <div class="col form-group">
+                        <input asp-for="Invoice.InvoiceItems[i].Price" type="text" class="form-control">
+                    </div>
+                    <div class="col form-group">
+                        <input asp-for="Invoice.InvoiceItems[i].PriceDph" type="text" class="form-control">
+                    </div>
+
+                    <a class="remove btn btn-danger" role="button" onclick="removeInputField(this);">X</a>
+                </div>
+
+                i++;
+            }
+        }
+
+
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <button type="button" class="btn btn-success" onclick="addRow()"><i class="fas fa-plus"></i></button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <input type="submit" value="Uložit" class="btn btn-primary" />
+        </div>
+    </div>
+
+</form>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/invoice-form.js"></script>
+    <script src="~/js/jquery-ui.js"></script>
+
+    <script>
+        $(function () {
+            $(".datepicker").datepicker({ dateFormat: 'yy/mm/dd' });
+        });</script>
+}

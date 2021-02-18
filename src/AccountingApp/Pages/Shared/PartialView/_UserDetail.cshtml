@@ -1,0 +1,56 @@
+﻿@{
+    @model AccountingApp.Models.AppUser
+}
+
+<div class="table-wrapper">
+    <table class="table">
+        <thead>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Přezdívka</th>
+                <td>@Html.DisplayFor(model => model.UserName)</td>
+            </tr>
+            <tr>
+                <th scope="row">Role</th>
+                <td>@Html.DisplayFor(model => model.Role.Name)</td>
+            </tr>
+            <tr>
+                <th scope="row">Jméno</th>
+                <td>@Html.DisplayFor(model => model.FirstName)</td>
+            </tr>
+            <tr>
+                <th scope="row">Příjmení</th>
+                <td>@Html.DisplayFor(model => model.LastName)</td>
+            </tr>
+            <tr>
+                <th scope="row">Email</th>
+                <td>@Html.DisplayFor(model => model.Email)</td>
+            </tr>
+            <tr>
+                <th scope="row">Rodné číslo</th>
+                <td>@Html.DisplayFor(model => model.PersonalIdentificationNumber)</td>
+            </tr>
+            <tr>
+                <th scope="row">Telefon</th>
+                <td>@Html.DisplayFor(model => model.Phone)</td>
+            </tr>
+            <tr>
+                <th scope="row">Číslo účtu</th>
+                <td>@Html.DisplayFor(model => model.AccountNumber)</td>
+            </tr>
+            <tr>
+                <th scope="row">Číslo karty</th>
+                <td>@Html.DisplayFor(model => model.CardNumber)</td>
+            </tr>
+            <tr>
+                <th scope="row">Adresa</th>
+                <td>
+                    @Html.DisplayFor(model => model.Address.Street)<br />
+                    @Html.DisplayFor(model => model.Address.City)<br />
+                    @Html.DisplayFor(model => model.Address.ZipCode)<br />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
